@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "voiidOS", "voiidOS.csproj", "{5A11E935-D56F-4E1E-A3D4-51F2A0D37122}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A11E935-D56F-4E1E-A3D4-51F2A0D37122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A11E935-D56F-4E1E-A3D4-51F2A0D37122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A11E935-D56F-4E1E-A3D4-51F2A0D37122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A11E935-D56F-4E1E-A3D4-51F2A0D37122}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CD884E8-5FD1-4B59-AD89-2A94D698524F}
+	EndGlobalSection
+EndGlobal
