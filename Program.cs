@@ -9,6 +9,7 @@ namespace voiidOS
         static void Main(string[] args)
         {
             // Top
+            Console.BackgroundColor = ConsoleColor.Black;
 
             void aboutOS()
             {
@@ -65,6 +66,7 @@ namespace voiidOS
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 string loginOrShutdown = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
 
                 // While loop for if input is out of bounds
 
@@ -84,7 +86,7 @@ namespace voiidOS
                 if (shrink(loginOrShutdown) == "shutdown")
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Project: VoiidOS Terminated");
+                    Console.WriteLine("Project: VoiidOS terminated due to shutdown signal by user.");
                     Console.Write("Press any key to continue");
                     Console.ReadKey();
                     Console.ForegroundColor = ConsoleColor.White;
@@ -92,6 +94,9 @@ namespace voiidOS
                 }
                 else if (shrink(loginOrShutdown) == "login")
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Users:");
+                    Console.ForegroundColor = ConsoleColor.White;
                     //List all users with separator between that breaks before the end
                     int userGapCounter = 0;
                     foreach (var user in voiidUser)
@@ -109,7 +114,7 @@ namespace voiidOS
                     }
 
                     // Actually login
-                    Console.Write("Enter your username: ");
+                    Console.Write("\nEnter your username: ");
 
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     string uNameInput = Console.ReadLine();
@@ -124,12 +129,15 @@ namespace voiidOS
                             userNum = i;
                             break;
                         }
-                        i++;
+                        if (i < voiidUser.Count-1)
+                        {
+                            i++;
+                        }
                     }
                     while (uNameInput != voiidUser[i].username)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Error: User Not Found");
+                        Console.WriteLine("\nError: User Not Found");
                         Console.ForegroundColor = ConsoleColor.White;
 
                         Console.Write("Enter your username: ");
@@ -147,15 +155,34 @@ namespace voiidOS
                                 userNum = i;
                                 break;
                             }
-                            i++;
+                            if (i < voiidUser.Count - 1)
+                            {
+                                i++;
+                            }
                         }
                     }
 
-
-
-
-
-                    Console.WriteLine(voiidUser[userNum].username);
+                    if (voiidUser[userNum].checkPassword() == true)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Access Granted.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("Welcome, ");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.Write(voiidUser[userNum].username);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(".\n");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nYou have entered an incorrect password too many times.");
+                        Console.WriteLine("\nProject: VoiidOS terminated due to potential data breach.");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Environment.Exit(0);
+                    }
                 }
             }
 
@@ -164,115 +191,54 @@ namespace voiidOS
 
             Programs.ProgramStringLength stringLength = new Programs.ProgramStringLength();
             Programs.ProgramVowelOrConsonant vowelOrConsonant = new Programs.ProgramVowelOrConsonant();
-            stringLength.Run();
-            vowelOrConsonant.Run();
-            //        Console.Write("Enter Username or shutdown: ");
-            //        Console.ForegroundColor = ConsoleColor.Cyan;
-            //        username = Console.ReadLine();
-            //        Console.ForegroundColor = ConsoleColor.White;
-            //        foreach (string userN in User.userList)
-            //        {
-            //            if (username.ToLower().Replace(" ", "") == "shutdown")
-            //            {
-            //                Console.ForegroundColor = ConsoleColor.Red;
-            //                Console.WriteLine("Project: VoiidOS Terminated");
-            //                Console.Write("Press any key to continue");
-            //                Console.ReadKey();
-            //                Console.ForegroundColor = ConsoleColor.White;
-            //                Environment.Exit(0);
-            //            }
-            //            else if (username == userN)
-            //            {
-            //                userIndex = User.userList.IndexOf(userN);
-            //                passwordLogin();
-            //            }
-            //        }
-            //        Console.ForegroundColor = ConsoleColor.Red;
-            //        Console.WriteLine(">Error: Incorrect Username.");
-            //        Console.ForegroundColor = ConsoleColor.White;
-            //        uNameLogin();
+            
+            List<Action> programs = new List<Action>();
+            programs.Add(stringLength.Run);
+            programs.Add(vowelOrConsonant.Run);
 
-            //        void passwordLogin()
-            //        {
-            //            Console.Write("Enter Password: ");
-            //            Console.ForegroundColor = ConsoleColor.Cyan;
-            //            password = Console.ReadLine();
-            //            Console.ForegroundColor = ConsoleColor.White;
+            void desktopUI()
+            {
+                Console.BackgroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("\n{0}'s Desktop:", voiidUser[userNum].username);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
 
-            //            if (password != User.passwordList[userIndex])
-            //            {
-            //                Console.ForegroundColor = ConsoleColor.Red;
-            //                Console.WriteLine(">Error: Incorrect Password.");
-            //                Console.ForegroundColor = ConsoleColor.White;
-            //                passwordLogin();
-            //            }
-            //            loadScreen();
-            //        }
-            //        passwordLogin();
-            //    }
-            //    Console.WriteLine("\n\n");
-            //    uNameLogin();
-            //}
-            //login();   
-            //        }
-            //    loginScreen();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nInstalled Programs:");
 
-            //    // Welcome/Loading screen
+                int progNum = 1;
+                foreach (var program in programs)
+                {
+                    Console.Write("{0}: {1}",progNum,program);
+                }
 
-            //    void loadScreen()
-            //    {
-            //        Console.Write("\nWelcome, ");
-            //        Console.ForegroundColor = ConsoleColor.Cyan;
-            //        Console.WriteLine(username);
-            //        Console.ForegroundColor = ConsoleColor.White;
-            //        Console.WriteLine("\nLoading...");
-            //        desktopUI();
-            //    }
-
-            //    void desktopUI()
-            //    {
-            //        Console.BackgroundColor = ConsoleColor.Cyan;
-            //        Console.ForegroundColor = ConsoleColor.Black;
-            //        Console.WriteLine("\n{0}'s Desktop:", currentUser.username);
-            //        Console.BackgroundColor = ConsoleColor.Black;
-            //        Console.ForegroundColor = ConsoleColor.White;
-
-            //        Console.ForegroundColor = ConsoleColor.Yellow;
-            //        Console.WriteLine("\nInstalled Programs:");
-
-            //        Console.ForegroundColor = ConsoleColor.Yellow;
-            //        Console.Write("1) ");
-            //        Console.BackgroundColor = ConsoleColor.Yellow;
-            //        Console.ForegroundColor = ConsoleColor.Black;
-            //        Console.WriteLine("Vowel or Consonant Checker");
-            //        Console.BackgroundColor = ConsoleColor.Black;
-            //        Console.ForegroundColor = ConsoleColor.White;
-
-            //        Console.WriteLine();
-            //        string run, directRun;
-            //        do
-            //        {
-            //            Console.Write("Enter a Program Number to run: ");
-            //            Console.ForegroundColor = ConsoleColor.Yellow;
-            //            run = Console.ReadLine();
-            //            Console.ForegroundColor = ConsoleColor.White;
-            //            directRun = run.ToLower().Replace(" ","");
-            //            Console.WriteLine();
-            //            switch (directRun)
-            //            {
-            //                case "1":
-            //                    DefaultPrograms.vowelOrConsonant();
-            //                    break;
-            //                default:
-            //                    Console.ForegroundColor = ConsoleColor.Red;
-            //                    Console.WriteLine("That is not an installled program.");
-            //                    Console.ForegroundColor = ConsoleColor.White;
-            //                    break;
-            //            }
-            //        } 
-            //        while (directRun != "shutdown");
-            //        Environment.Exit(0);
-            //    }
+                //Console.WriteLine();
+                //string run, directRun;
+                //do
+                //{
+                //    Console.Write("Enter a Program Number to run: ");
+                //    Console.ForegroundColor = ConsoleColor.Yellow;
+                //    run = Console.ReadLine();
+                //    Console.ForegroundColor = ConsoleColor.White;
+                //    directRun = run.ToLower().Replace(" ", "");
+                //    Console.WriteLine();
+                //    switch (directRun)
+                //    {
+                //        case "1":
+                //            DefaultPrograms.vowelOrConsonant();
+                //            break;
+                //        default:
+                //            Console.ForegroundColor = ConsoleColor.Red;
+                //            Console.WriteLine("That is not an installled program.");
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //            break;
+                //    }
+                //}
+                //while (directRun != "shutdown");
+                //Environment.Exit(0);
+            }
+            desktopUI();
 
             Console.ReadKey();
         }

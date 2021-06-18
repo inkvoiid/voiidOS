@@ -22,7 +22,15 @@ namespace voiidOS.Programs
             string input = Console.ReadLine();
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("The string is {0} characters long with {1} spaces", input.Length, (input.Length - input.Replace(" ", "").Length));
+            if((input.Length - input.Replace(" ", "").Length) == 1)
+            {
+                Console.WriteLine("The string is {0} characters and {1} space long", input.Replace(" ", "").Length, (input.Length - input.Replace(" ", "").Length));
+            }
+            else
+            {
+                Console.WriteLine("The string is {0} characters and {1} spaces long", input.Replace(" ", "").Length, (input.Length - input.Replace(" ", "").Length));
+            }
+            
 
             Console.WriteLine("");
         }

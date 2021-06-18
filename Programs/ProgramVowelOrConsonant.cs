@@ -24,20 +24,24 @@ namespace voiidOS.Programs
 
                 if (string.IsNullOrWhiteSpace(char1))
                 {
-                    Console.WriteLine("Error: Character can't be blank!"); 
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nError: Character can't be blank!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     checkInput();
                 }
 
                 if (Char.IsLetter(char1[0]) == false)
                 {
-                    Console.WriteLine("Error: Character is invalid!"); 
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nError: Character is invalid!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     checkInput();
                 }
             }
             checkInput();
             if (char1.Length > 1)
             {
-                Console.WriteLine("Grabbing only the first character which is: \"{0}\"", char1[0]);
+                Console.WriteLine("\nGrabbing only the first character which is: \"{0}\"", char1[0]);
             }
 
             switch (char1[0])
@@ -52,12 +56,12 @@ namespace voiidOS.Programs
                 case 'I':
                 case 'O':
                 case 'U':
-                    Console.WriteLine("The letter {0} is a vowel", char1[0]);
+                    Console.WriteLine("\nThe letter {0} is a vowel", char1[0]);
                     break;
 
 
                 default:
-                    Console.WriteLine("The letter {0} is a consonant", char1[0]);
+                    Console.WriteLine("\nThe letter {0} is a consonant", char1[0]);
                     break;
 
             }
