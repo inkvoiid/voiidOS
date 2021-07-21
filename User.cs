@@ -6,6 +6,7 @@ class User
     public string username;
     private string password;
     private bool admin;
+    public static List<string> userList = new List<string>();
 
     public User(string uName, string pword, bool isAdmin)
     {
