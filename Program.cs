@@ -149,7 +149,7 @@ namespace voiidOS
                     if (voiidUser[userNum].checkPassword() == true)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Access Granted.");
+                        Console.WriteLine("Access Granted.\n");
                         Console.ResetColor();
                         Console.Write("Welcome, ");
                         Console.ForegroundColor = ConsoleColor.Cyan;
