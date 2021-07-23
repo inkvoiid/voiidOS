@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Text = voiidOS.Utils.Text;
 
 namespace voiidOS
 {
@@ -9,8 +10,6 @@ namespace voiidOS
         static void Main(string[] args)
         {
             // Top
-            Console.BackgroundColor = ConsoleColor.Black;
-
             void aboutOS()
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -27,63 +26,57 @@ namespace voiidOS
                 Console.WriteLine(" Now in C#!");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("");
-                Console.WriteLine("Version b3.0 | Copyright VOIID Inc. 2021");
+                Console.WriteLine("Version b3.0 | © inkvoiid 2021");
                 Console.WriteLine("");
             }
             aboutOS();
 
-            int userNum = 100;
+            //Set userNum
+            int userNum = -1;
+
+            //Create a list of user and add create them inside the list.
             List<User> voiidUser = new List<User>();
             voiidUser.Add(new User("inkvoiid", "voo", true));
             voiidUser.Add(new User("DumbleDog_", "pig", false));
 
 
-            string shrink(string input) 
-            {
-                return input.ToLower().Replace(" ", "");
-            }
 
             //Login and shutdown
 
             void Login()
             {
-                Console.BackgroundColor = ConsoleColor.Cyan;
-                Console.ForegroundColor = ConsoleColor.Black;
+                //Login or shutdown options
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("Login");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
-
-                Console.Write("|");
-
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.ForegroundColor = ConsoleColor.Black;
+                Console.ResetColor();
+                Console.Write(" | ");
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Shutdown");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ResetColor();
+                Console.WriteLine();
 
+                //Gets input and shrinks it.
                 Console.Write("Select your option: ");
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                string loginOrShutdown = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
+                string loginOrShutdown = Text.Shrink(Console.ReadLine());
+                Console.ResetColor();
+
 
                 // While loop for if input is out of bounds
-
-                while (shrink(loginOrShutdown) != "login" & shrink(loginOrShutdown) != "shutdown")
+                while (loginOrShutdown != "login" & loginOrShutdown != "shutdown")
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error: Not an option");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ResetColor();
                     Console.Write("Select your option: ");
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    loginOrShutdown = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.White;
+                    loginOrShutdown = Text.Shrink(Console.ReadLine());
+                    Console.ResetColor();
                 }
 
                 // If statement for either login or shutdown using cool shrink function
-
-                if (shrink(loginOrShutdown) == "shutdown")
+                if (loginOrShutdown == "shutdown")
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Project: VoiidOS terminated due to shutdown signal by user.");
@@ -92,19 +85,20 @@ namespace voiidOS
                     Console.ForegroundColor = ConsoleColor.White;
                     Environment.Exit(0);
                 }
-                else if (shrink(loginOrShutdown) == "login")
+                else if (loginOrShutdown == "login")
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Users:");
+                    Console.WriteLine("\nUsers:");
                     Console.ForegroundColor = ConsoleColor.White;
+
                     //List all users with separator between that breaks before the end
                     int userGapCounter = 0;
-                    foreach (var user in voiidUser)
+                    foreach (User user in voiidUser)
                     {
                         userGapCounter++;
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write(user.username);
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ResetColor();
                         if (userGapCounter==voiidUser.Count)
                         {
                             Console.WriteLine();
@@ -113,85 +107,87 @@ namespace voiidOS
                         Console.Write(" | ");
                     }
 
+                    //Set userNum to -1 for logging out users to switch user
+                    userNum = -1;
+
                     // Actually login
-                    Console.Write("\nEnter your username: ");
-
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    string uNameInput = Console.ReadLine();
-                    Console.ForegroundColor = ConsoleColor.White;
-                    
-                    int i = 0;
-                    foreach (var user in voiidUser)
+                    void usernameSelect()
                     {
-
-                        if (uNameInput == user.username)
-                        {
-                            userNum = i;
-                            break;
-                        }
-                        if (i < voiidUser.Count-1)
-                        {
-                            i++;
-                        }
-                    }
-                    while (uNameInput != voiidUser[i].username)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nError: User Not Found");
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        Console.Write("Enter your username: ");
+                        Console.Write("\nEnter your username: ");
 
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        uNameInput = Console.ReadLine();
-                        Console.ForegroundColor = ConsoleColor.White;
+                        string uNameInput = Console.ReadLine();
+                        Console.ResetColor();
 
-                        i = 0;
-                        foreach (var user in voiidUser)
+                        for (int user = 0; user < voiidUser.Count; user++)
                         {
-
-                            if (uNameInput == user.username)
+                            if (uNameInput == voiidUser[user].username)
                             {
-                                userNum = i;
+                                userNum = user;
                                 break;
                             }
-                            if (i < voiidUser.Count - 1)
+                            else if (user == voiidUser.Count-1)
                             {
-                                i++;
+                                if (uNameInput != voiidUser[user].username)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("\nError: User Not Found");
+                                    Console.ResetColor();
+                                }
                             }
                         }
                     }
 
+                    while (userNum < 0 || userNum >= voiidUser.Count)
+                    {
+                        usernameSelect();
+                    }
+
+                    //Uses method in User class to check password for specified user
+
+                    //Password matches
                     if (voiidUser[userNum].checkPassword() == true)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Access Granted.");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ResetColor();
                         Console.Write("Welcome, ");
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write(voiidUser[userNum].username);
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ResetColor();
                         Console.WriteLine(".\n");
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nYou have entered an incorrect password too many times.");
-                        Console.WriteLine("\nProject: VoiidOS terminated due to potential data breach.");
+
                         Console.Write("Press any key to continue");
                         Console.ReadKey();
-                        Console.ForegroundColor = ConsoleColor.White;
+
+                        //Clear login screen and display desktop
+                        Console.Clear();
+                        aboutOS();
+                        return;
+                    }
+                    //Password attempt limit exceeded
+                    else
+                    {
+                        Console.Clear();
+                        aboutOS();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("FATAL: You have entered an incorrect password too many times.");
+                        Console.WriteLine("Project: VoiidOS terminated due to potential data breach.");
+                        Console.ResetColor();
+                        Console.Write("\nPress any key to continue");
+                        Console.ReadKey();
                         Environment.Exit(0);
                     }
                 }
             }
 
+            //Calls the Login method so I can reuse
             Login();
 
 
             Programs.ProgramStringLength stringLength = new Programs.ProgramStringLength();
             Programs.ProgramVowelOrConsonant vowelOrConsonant = new Programs.ProgramVowelOrConsonant();
-            
+
             List<Action> programs = new List<Action>();
             programs.Add(stringLength.Run);
             programs.Add(vowelOrConsonant.Run);

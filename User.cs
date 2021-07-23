@@ -19,10 +19,12 @@ class User
     {
         for (int tryCount = 2; tryCount >= 0; tryCount--)
         {
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
             Console.Write("Enter your password: ");
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Black;
             string passwordGuess = Console.ReadLine();
+            Console.ResetColor();
             Console.WriteLine();
             if (passwordGuess == password)
             {
